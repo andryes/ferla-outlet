@@ -1,0 +1,666 @@
+<title>Ferla Outlet Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ferla-cw:1430px;
+  --gutter:clamp(16px,5vw,64px);
+  --ink:#111111;
+  --ink-2:#7A7A7A;
+  --ink-3:#54595F;
+  --panel:#F5F5F5;
+  --panel-2:#f2f2f3;
+  --panel-3:#f4f4f5;
+  --line:#E2E2E2;
+  --brand:#F73821;
+  --brand-hover:#DB2C16;
+  --chip-bg:#fdecea;
+  --chip-fg:#F93922;
+  --dark:#1c1c1c;
+  --r-card:16px;
+  --r-btn:8px;
+  --r-panel:12px;
+  --font:"Nunito","Nunito Sans","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#fff;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font-family:inherit}
+h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.2}
+p{margin:0}
+.wrap{max-width:var(--ferla-cw);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- prototype tab bar ---------- */
+.proto{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.proto .wrap{display:flex;align-items:center;gap:8px;min-height:48px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.proto .tabs{display:flex;gap:4px;background:var(--panel);padding:4px;border-radius:999px}
+.proto .tab{border:0;background:transparent;border-radius:999px;padding:6px 14px;font-size:14px;font-weight:700;color:var(--ink-2);cursor:pointer}
+.proto .tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.proto .note{font-size:12px;color:var(--ink-2);margin-left:auto}
+@media (max-width:699px){.proto .note{margin-left:0;flex-basis:100%}}
+
+/* ---------- header ---------- */
+.hdr{border-bottom:1px solid var(--line);background:#fff}
+.hdr .wrap{display:flex;align-items:center;gap:24px;min-height:72px}
+.logo{font-weight:800;font-size:28px;letter-spacing:-.02em;text-decoration:none;color:var(--ink);line-height:1}
+.nav{display:flex;gap:22px;font-size:15px;font-weight:600;color:var(--ink-3);margin-left:8px}
+.nav a{text-decoration:none}
+.hdr .spacer{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--r-btn);font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;border:1px solid transparent;padding:0 20px;height:44px;white-space:nowrap}
+.btn-brand{background:var(--brand);color:#fff}
+.btn-brand:hover{background:var(--brand-hover)}
+.btn-white{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-white:hover{border-color:var(--ink)}
+.btn-outline-white{background:transparent;color:#fff;border-color:rgba(255,255,255,.85)}
+.btn-lg{height:52px;font-size:16px;width:100%}
+.burger{display:none;width:40px;height:40px;border:0;background:none;padding:0}
+.burger span{display:block;height:2px;background:var(--ink);margin:6px 8px;border-radius:2px}
+@media (max-width:1099px){.nav{display:none}.burger{display:block}}
+
+/* ---------- page switch ---------- */
+.page{display:none}
+.page.is-active{display:block}
+
+/* ---------- listing ---------- */
+.crumbs{font-size:13px;color:var(--ink-2);padding-top:20px}
+.crumbs a{text-decoration:none}
+.hero-white{padding:8px 0 36px}
+.hero-white h1{font-size:clamp(30px,4vw,44px);margin-top:6px}
+.count{margin-top:10px;font-size:16px;color:var(--ink-3);font-weight:600}
+.count .dot{color:var(--ink-2);padding:0 6px;font-weight:400}
+
+.band{background:var(--panel);padding:36px 0}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tile{background:#fff;border-radius:var(--r-card);padding:20px 22px;display:flex;gap:14px;align-items:flex-start}
+.tile svg{flex:0 0 28px;width:28px;height:28px}
+.tile b{display:block;font-size:16px}
+.tile span{font-size:14px;color:var(--ink-2)}
+@media (max-width:899px){.tiles{grid-template-columns:1fr}.tile{padding:16px 18px}}
+
+.legend{padding:22px 0 4px;font-size:14px;color:var(--ink-3);line-height:1.6}
+.legend b{color:var(--ink);font-weight:700}
+.legend .dot{color:var(--ink-2);padding:0 8px}
+
+.group{padding:28px 0 8px}
+.group h2{text-align:center;font-size:clamp(26px,3vw,34px)}
+.group .sub{text-align:center;color:var(--ink-2);font-size:15px;margin-top:6px}
+.grid{display:grid;grid-template-columns:1fr;gap:28px 24px;margin-top:28px}
+@media (min-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+
+/* card */
+.card{display:block;text-decoration:none;color:inherit}
+.card .ph{position:relative;aspect-ratio:4/3;background:var(--panel);border-radius:var(--r-card);overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover;object-position:center}
+.card .ph .coming{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--ink-2);font-size:14px;font-weight:600}
+.card .ph .coming svg{width:36px;height:36px}
+.badges{position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;background:#fff;color:var(--ink);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:600;line-height:1.2;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.card .name{margin-top:14px;font-size:21px;font-weight:600;line-height:1.25}
+.card .spec{font-size:14px;color:var(--ink-2);margin-top:2px}
+.card .price{font-size:23px;font-weight:700;margin-top:8px;line-height:1.2}
+.card .was{font-size:14.5px;color:var(--ink-2);margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card .was s{text-decoration:line-through}
+.chip{display:inline-flex;align-items:center;background:var(--chip-bg);color:var(--chip-fg);border-radius:999px;padding:3px 9px;font-size:13px;font-weight:600;line-height:1.3;white-space:nowrap}
+.card .avail{margin-top:8px;font-size:15px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.card .avail .view{font-weight:700;text-decoration:none;color:var(--ink)}
+.card:hover .name{text-decoration:underline}
+.card.sold{opacity:.6}
+@media (max-width:699px){
+  .card .avail .view{display:none}
+  .card .price-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .card .price-row .price{margin-top:0}
+}
+
+/* lifestyle band */
+.life{position:relative;margin-top:44px;min-height:360px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;background:#2a2a2a;overflow:hidden}
+.life img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.life .in{position:relative;padding:56px var(--gutter);max-width:720px}
+.life h2{font-size:clamp(26px,3.4vw,38px)}
+.life p{margin-top:10px;font-size:16px;color:rgba(255,255,255,.85)}
+.life .acts{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+@media (max-width:699px){.life .acts{flex-direction:column}.life .acts .btn{width:100%;height:48px}}
+
+.sold-sec{padding:44px 0 0}
+.sold-sec h2{text-align:center;font-size:clamp(24px,3vw,30px)}
+.sold-sec .empty{margin:20px auto 0;max-width:720px;background:var(--panel);border-radius:var(--r-card);padding:20px 24px;color:var(--ink-2);font-size:14px;text-align:center}
+
+/* accordion */
+.acc{border-top:1px solid var(--line)}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:0;padding:18px 0;font-size:17px;font-weight:700;color:var(--ink);text-align:left;cursor:pointer}
+.acc-btn .ic{flex:0 0 24px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;position:relative}
+.acc-btn .ic:before,.acc-btn .ic:after{content:"";position:absolute;background:var(--ink);width:10px;height:2px;border-radius:1px}
+.acc-btn .ic:after{transform:rotate(90deg);transition:transform .2s}
+.acc-item.open .acc-btn .ic:after{transform:rotate(0)}
+.acc-panel{display:none;padding:0 0 22px;color:var(--ink-3);font-size:15px;line-height:1.6}
+.acc-item.open .acc-panel{display:block}
+.acc-panel ul{margin:8px 0 0;padding-left:20px}
+.acc-panel li{margin:4px 0}
+.guide{padding:44px 0 56px}
+.guide .acc{max-width:920px;margin:0 auto}
+
+/* ---------- PDP ---------- */
+.pdp-top{display:grid;grid-template-columns:58fr 42fr;gap:40px;padding-top:24px;align-items:start}
+.pdp-top>*{min-width:0}
+@media (max-width:899px){.pdp-top{grid-template-columns:1fr;gap:20px}}
+.gal .hero{position:relative;aspect-ratio:4/3;background:var(--panel);border-radius:var(--r-card);overflow:hidden;cursor:zoom-in}
+.gal .hero img{width:100%;height:100%;object-fit:cover}
+.gal .hero .badges{top:16px;left:16px}
+.gal .hero .zoom{position:absolute;right:14px;bottom:14px;background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:12px}
+.thumb{aspect-ratio:4/3;border-radius:10px;background:var(--panel);overflow:hidden;border:2px solid transparent;padding:0;cursor:pointer;position:relative;font-family:inherit}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb.is-on{border-color:var(--ink)}
+.thumb .lbl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--ink-2);line-height:1.2;text-align:center;padding:4px}
+.thumb .lbl small{font-weight:400;font-size:10px}
+.ph-note{margin-top:10px;font-size:12px;color:var(--ink-2)}
+@media (max-width:899px){.thumbs{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}.thumb{flex:0 0 96px;scroll-snap-align:start}.thumb .lbl{font-size:12px}}
+
+.buy{position:sticky;top:64px}
+@media (max-width:899px){.buy{position:static}}
+.eyebrow{font-size:13px;color:var(--ink-2);font-weight:600}
+.buy h1{font-size:clamp(28px,3vw,40px);margin-top:6px;line-height:1.15}
+.price-line{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}
+.price-line .now{font-size:34px;font-weight:700;line-height:1}
+.price-line .chip{font-size:14px;padding:5px 11px}
+.was-line{margin-top:8px;font-size:16px;color:var(--ink-2)}
+.was-line s{text-decoration:line-through}
+.breakdown{font-size:14px;color:var(--ink-2);margin-top:2px}
+.info{background:var(--panel-3);border-radius:var(--r-panel);padding:16px 18px;margin-top:18px;display:grid;gap:9px;font-size:15px;color:var(--ink)}
+.info .row{display:flex;gap:10px;align-items:flex-start}
+.info svg{flex:0 0 18px;width:18px;height:18px;margin-top:3px}
+.info b{font-weight:700}
+.specs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 16px;margin-top:18px}
+.specs .k{font-size:13px;color:var(--ink-2)}
+.specs .v{font-size:15px;font-weight:600;color:var(--ink)}
+.cta{margin-top:20px;display:grid;gap:10px}
+.call{margin-top:12px;font-size:14px;color:var(--ink-3);text-align:center}
+.call a{font-weight:700;text-decoration:none}
+.trust{margin-top:8px;font-size:13px;color:var(--ink-2);text-align:center;line-height:1.6}
+.trust .dot{padding:0 5px}
+.trust a{text-decoration:none;font-weight:600;color:var(--ink)}
+
+.pdp-bottom{max-width:920px;margin:44px auto 0}
+.pdp-bottom .acc-panel{font-size:15px}
+.best{display:grid;gap:4px;margin-top:10px}
+.best span{display:flex;gap:8px;align-items:center}
+.chk{display:grid;gap:6px;margin-top:10px}
+.chk .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--panel-2);color:var(--ink)}
+.chk .r:last-child{border-bottom:0}
+.chk .st{font-size:12px;font-weight:700;border-radius:999px;padding:3px 9px;background:var(--panel);color:var(--ink-2)}
+.chk .st.ok{background:#e8f5ec;color:#23A455}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+.two h4{font-size:14px;color:var(--ink);margin-bottom:4px}
+.two ul{margin:0;padding-left:18px}
+@media (max-width:599px){.two{grid-template-columns:1fr}}
+table.t{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+table.t th,table.t td{padding:10px 8px;border-bottom:1px solid var(--panel-2);text-align:left;vertical-align:top}
+table.t th{color:var(--ink-2);font-weight:600;font-size:13px}
+table.t td.k{color:var(--ink-2);width:34%}
+table.t td b{color:var(--ink)}
+.t-wrap{overflow-x:auto}
+.cross{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:10px}
+.cross .c{background:var(--panel);border-radius:var(--r-panel);padding:14px;text-align:center}
+.cross .c .n{font-weight:700;color:var(--ink);font-size:14px}
+.cross .c .p{font-size:14px;color:var(--ink-3);margin-top:2px}
+.cross .c .btn{height:36px;font-size:13px;width:100%;margin-top:10px;padding:0 10px}
+@media (max-width:699px){.cross{grid-template-columns:repeat(2,1fr)}}
+.faq-q{font-weight:700;color:var(--ink);margin-top:10px}
+.other{padding:44px 0 56px}
+.other h2{text-align:center;font-size:clamp(24px,3vw,30px)}
+.other .grid{margin-top:24px}
+.rev-note{background:var(--panel);border-radius:var(--r-panel);padding:14px 16px;font-size:14px;color:var(--ink-2)}
+
+/* mobile sticky bar */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#fff;border-top:1px solid var(--line);padding:10px var(--gutter) calc(10px + env(safe-area-inset-bottom));display:none;align-items:center;gap:10px;min-height:64px;transform:translateY(110%);transition:transform .25s}
+.sticky.show{transform:translateY(0)}
+.sticky .pr{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.sticky .pr b{font-size:18px;line-height:1.1}
+.sticky .btn{height:44px;padding:0 18px;font-size:15px}
+.sticky .ask{width:44px;padding:0;flex:0 0 44px}
+@media (max-width:699px){.sticky{display:flex}body.has-sticky{padding-bottom:84px}}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:60;padding:24px}
+.lb.open{display:flex}
+.lb img{max-width:100%;max-height:100%;border-radius:12px}
+.lb .x{position:absolute;top:16px;right:16px;background:#fff;border:0;border-radius:999px;width:40px;height:40px;font-size:20px;cursor:pointer}
+
+/* footer */
+.ftr{background:var(--dark);color:#fff;margin-top:24px;padding:36px 0}
+.ftr .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.ftr .logo{color:var(--brand)}
+.ftr .meta{font-size:14px;color:rgba(255,255,255,.75);line-height:1.7}
+</style>
+
+
+<!-- prototype tab bar -->
+<div class="proto">
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Prototype pages">
+      <button class="tab" role="tab" id="tab-listing" aria-selected="true" data-page="listing">Outlet listing</button>
+      <button class="tab" role="tab" id="tab-pdp" aria-selected="false" data-page="pdp">Product page · Mini #015</button>
+    </div>
+    <div class="note">Wireframe · photos are current warehouse shots and will be replaced after the shoot</div>
+  </div>
+</div>
+
+<!-- simplified Ferla header -->
+<header class="hdr">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Ferla">ferla</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">Home</a><a href="#">Products ▾</a><a href="#">Process</a><a href="#">Contact Us</a><a href="#">FAQ</a><a href="#">Financing</a><a href="#">Events</a><a href="#">Reviews</a><a href="#">Blog</a>
+    </nav>
+    <div class="spacer"></div>
+    <a class="btn btn-brand" href="#">Get A Quote</a>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ===================== PAGE 1: LISTING ===================== -->
+<main class="page is-active" id="page-listing" role="tabpanel" aria-labelledby="tab-listing">
+
+  <section class="hero-white">
+    <div class="wrap">
+      <div class="crumbs"><a href="#">Home</a> › Outlet</div>
+      <h1>Ferla Outlet - Bikes &amp; Carts</h1>
+      <p class="count">9 units in stock<span class="dot">·</span>ships now (new builds 2–4 weeks)<span class="dot">·</span>flat $1,200 crate shipping or pick up</p>
+    </div>
+  </section>
+
+  <section class="band" aria-label="How Outlet works">
+    <div class="wrap">
+      <div class="tiles">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>
+          <div><b>In stock - ships in N business days</b><span>No 2–4 week build. Every unit is here, assembled and ready.</span></div>
+        </div>
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          <div><b>Inspected &amp; serviced in our Southern California warehouse</b><span>Condition is graded and documented per unit.</span></div>
+        </div>
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l8-4 8 4v10l-8 4-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>
+          <div><b>Flat $1,200 crate shipping - or pick up and save it</b><span>Continental US. Arrives assembled; canopy ships disassembled.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <p class="legend"><b>New (previous generation)</b> - never used, prior production run<span class="dot">·</span><b>Like new</b> - demo unit, minor marks, mileage listed<span class="dot">·</span><b>Used</b> - visible wear, documented in photos</p>
+  </div>
+
+  <section class="group">
+    <div class="wrap">
+      <h2>Bikes <span style="color:var(--ink-2);font-weight:600">(7)</span></h2>
+      <p class="sub">Sorted by outlet price, lowest first</p>
+      <div class="grid" id="grid-bikes"></div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="wrap">
+      <h2>Carts <span style="color:var(--ink-2);font-weight:600">(2)</span></h2>
+      <p class="sub">Sorted by outlet price, lowest first</p>
+      <div class="grid" id="grid-carts"></div>
+    </div>
+  </section>
+
+  <section class="life" aria-label="Need a different configuration">
+    <img src="img/DSC_6540_HUcFErMV.webp" alt="">
+    <div class="in">
+      <h2>Need a different configuration?</h2>
+      <p>Build a new Ferla exactly the way you want it - custom builds typically ship in 2–4 weeks.</p>
+      <div class="acts">
+        <a class="btn btn-white" href="#">Build new in 3D</a>
+        <a class="btn btn-outline-white" href="#">Talk to sales</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sold-sec">
+    <div class="wrap">
+      <h2>Recently sold</h2>
+      <div class="empty">Appears once the first unit sells: up to 4 cards of the same component with a “Sold” badge, no price, 60% opacity, shown for 30 days. Horizontal scroll on mobile.</div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <div class="wrap">
+      <div class="acc">
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">Buying guide: used Ferla bikes &amp; carts <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel">
+            <p>Collapsed by default. The current ~1,200-word article is rewritten to ~400 Ferla-specific words: what the three outlet grades mean, how units are inspected, what “previous generation” changes, shipping and pickup, financing, and a short FAQ. Generic sections on longtail / bakfiets cargo bikes and coffee carts are removed because Ferla does not sell them. The URL /outlet and H1 keywords stay, so the page keeps its search value.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== PAGE 2: PDP ===================== -->
+<main class="page" id="page-pdp" role="tabpanel" aria-labelledby="tab-pdp">
+  <div class="wrap">
+    <div class="crumbs"><a href="#">Home</a> › <a href="#" data-goto="listing">Outlet</a> › Ferla Mini #015</div>
+
+    <div class="pdp-top">
+      <!-- gallery -->
+      <div class="gal">
+        <div class="hero" id="hero" role="button" tabindex="0" aria-label="Open photo">
+          <img id="hero-img" src="img/IMG_7972-1024x768.jpeg" alt="Ferla Mini outlet unit #015, black, 3/4 front view">
+          <div class="badges"><span class="pill">Like new · demo</span></div>
+          <span class="zoom">Tap to zoom</span>
+        </div>
+        <div class="thumbs" id="thumbs">
+          <button class="thumb is-on" data-src="img/IMG_7972-1024x768.jpeg" aria-label="Photo 1"><img src="img/IMG_7972-1024x768.jpeg" alt=""></button>
+          <button class="thumb" data-label="Side" aria-label="Side view - after shoot"><span class="lbl">Side<small>after shoot</small></span></button>
+          <button class="thumb" data-label="Rear" aria-label="Rear view - after shoot"><span class="lbl">Rear<small>after shoot</small></span></button>
+          <button class="thumb" data-label="Interior" aria-label="Interior - after shoot"><span class="lbl">Interior<small>after shoot</small></span></button>
+          <button class="thumb" data-label="Condition" aria-label="Condition photo 1 - after shoot"><span class="lbl">Condition<small>marks</small></span></button>
+          <button class="thumb" data-label="Condition" aria-label="Condition photo 2 - after shoot"><span class="lbl">Condition<small>marks</small></span></button>
+        </div>
+        <p class="ph-note">8–12 photos per unit after the shoot: 3/4 front, side, rear, interior, defects. Defect photos stay in the same gallery, captioned “Condition”.</p>
+      </div>
+
+      <!-- sticky buy column -->
+      <div class="buy">
+        <p class="eyebrow">Outlet · Unit #015 · 1 in stock</p>
+        <h1>Ferla Mini (previous gen) - Black, Electric</h1>
+
+        <div class="price-line">
+          <span class="now">$4,999</span>
+          <span class="chip">Save $500 (9%)</span>
+        </div>
+        <p class="was-line">Configured new <s>$5,499</s></p>
+        <p class="breakdown">= Ferla Mini $4,499 + Pedal Assist + Foldable Frame <span style="opacity:.8">(add-on prices from build sheet)</span></p>
+
+        <div class="info" aria-label="Condition and outlet information">
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span><b>Like new · demo unit</b> - used by Ferla for demos and events, minor cosmetic marks</span></div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><b>Why outlet:</b> previous-generation Mini, retired from the demo fleet</span></div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="16" r="3"/><circle cx="18" cy="16" r="3"/><path d="M6 16l4-8h5l3 8M10 8l2 8"/></svg><span><b>2 miles</b> of use</span></div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16H5z"/><path d="M9 9l2 2 4-4M9 15h6"/></svg><span>Inspected [date] · Final sale</span></div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg><span>Ships in N business days · flat $1,200 crate · or pick up</span></div>
+        </div>
+
+        <div class="specs" aria-label="Key specifications">
+          <div><div class="k">Drive</div><div class="v">Electric (pedal assist)</div></div>
+          <div><div class="k">Generation</div><div class="v">Previous</div></div>
+          <div><div class="k">Color</div><div class="v">Black</div></div>
+          <div><div class="k">Mileage</div><div class="v">2 miles</div></div>
+          <div><div class="k">Included add-ons</div><div class="v">Pedal Assist · Foldable Frame</div></div>
+          <div><div class="k">Range</div><div class="v" style="color:var(--ink-2);font-weight:400">hidden until filled from build sheet</div></div>
+        </div>
+
+        <div class="cta" id="cta">
+          <a class="btn btn-brand btn-lg" href="#">Buy now</a>
+          <a class="btn btn-white btn-lg" href="#">Reserve / Ask about this unit</a>
+        </div>
+        <p class="call">or call <a href="tel:+12132919070">+1 (213) 291-9070</a></p>
+        <p class="trust">Flat $1,200 crate shipping<span class="dot">·</span>Arrives assembled<span class="dot">·</span>Final sale<span class="dot">·</span><a href="#">Financing via Click Lease →</a></p>
+      </div>
+    </div>
+
+    <!-- lower sections -->
+    <div class="pdp-bottom">
+      <div class="acc">
+
+        <div class="acc-item open">
+          <button class="acc-btn" aria-expanded="true">Overview <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel">
+            <p>A previous-generation Ferla Mini that served as a Ferla demo unit: 2 miles of use, black finish, pedal assist and foldable frame installed. It is in the outlet because it was retired from the demo fleet, not because of a fault. Inspected and serviced, in stock in Southern California, and it ships now instead of the 2–4 weeks a new build takes.</p>
+            <div class="best">
+              <span>✓ Sampling activations &amp; experiential marketing</span>
+              <span>✓ Merch, accessories, skincare or small F&amp;B setups</span>
+              <span>✓ Indoor pop-ups, campuses and office events</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item open">
+          <button class="acc-btn" aria-expanded="true">Condition report <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel">
+            <p><b style="color:var(--ink)">Like new · demo</b> - inspected [date] by the warehouse team. Any note links to a photo in the gallery.</p>
+            <div class="chk">
+              <div class="r"><span>Frame</span><span class="st">OK / note</span></div>
+              <div class="r"><span>Motor &amp; battery</span><span class="st">OK / note</span></div>
+              <div class="r"><span>Brakes</span><span class="st">OK / note</span></div>
+              <div class="r"><span>Tires</span><span class="st">OK / note</span></div>
+              <div class="r"><span>Electrics</span><span class="st">OK / note</span></div>
+              <div class="r"><span>Body &amp; finish</span><span class="st">OK / note</span></div>
+            </div>
+            <p style="margin-top:10px;font-size:13px;color:var(--ink-2)">Filled in by the warehouse from the inspection checklist; sales only confirms. Open by default for Like new and Used units.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">What's included / Not included <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel">
+            <div class="two">
+              <div><h4>Included</h4><ul><li>Ferla Mini base unit (previous generation), black</li><li>Pedal assist</li><li>Foldable frame</li><li>Battery + charger</li></ul></div>
+              <div><h4>Not included</h4><ul><li>Standard canopy - to confirm (§6, Q10)</li><li>Freezer</li><li>Solar package</li></ul></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">Specifications <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel">
+            <table class="t">
+              <tr><td class="k">Dimensions</td><td>from attributes</td></tr>
+              <tr><td class="k">Weight</td><td>from attributes</td></tr>
+              <tr><td class="k">Load capacity</td><td>from attributes</td></tr>
+              <tr><td class="k">Motor</td><td>from attributes</td></tr>
+              <tr><td class="k">Battery</td><td>from attributes</td></tr>
+              <tr><td class="k">Range</td><td>from attributes</td></tr>
+            </table>
+            <p style="margin-top:8px;font-size:13px;color:var(--ink-2)">Rendered from WooCommerce attributes; empty rows are hidden, never shown as “N/A”.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">Compare with new <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel">
+            <div class="t-wrap">
+            <table class="t">
+              <tr><th></th><th>This unit #015</th><th>New Ferla Mini (base)</th><th>New, same configuration</th></tr>
+              <tr><td class="k">Price</td><td><b>$4,999</b></td><td>from $4,499</td><td>$5,499 (build sheet)</td></tr>
+              <tr><td class="k">Condition</td><td>Like new · demo, 2 mi</td><td>New</td><td>New</td></tr>
+              <tr><td class="k">Lead time</td><td><b>Ships now</b></td><td>2–4 weeks</td><td>2–4 weeks</td></tr>
+              <tr><td class="k">Warranty</td><td>By grade - text pending</td><td>New-unit warranty</td><td>New-unit warranty</td></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">Complete your setup <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel">
+            <div class="cross">
+              <div class="c"><div class="n">Standard Canopy</div><div class="p">$200</div><a class="btn btn-white" href="#">Add</a></div>
+              <div class="c"><div class="n">Solar Package</div><div class="p">$1,000</div><a class="btn btn-white" href="#">Add</a></div>
+              <div class="c"><div class="n">Freezer 70L</div><div class="p">$749</div><a class="btn btn-white" href="#">Add</a></div>
+              <div class="c"><div class="n">Spare Battery</div><div class="p">$599</div><a class="btn btn-white" href="#">Add</a></div>
+            </div>
+            <p style="margin-top:8px;font-size:13px;color:var(--ink-2)">Catalog prices; add-ons already installed on this unit are excluded.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">Shipping &amp; pickup <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel"><p>Flat $1,200 per crate within the continental US; international on request. Bikes and carts arrive fully assembled, canopies ship disassembled. This unit ships in N business days. Pick up at our Southern California warehouse and save the crate fee.</p></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">Payment &amp; returns <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel"><p>Card, ACH / wire, Click Lease financing or PO - final list to be confirmed. California sales tax applies on delivery or pickup in California; tax-exempt buyers provide a certificate. Outlet sales are final.</p></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">Warranty <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel"><p>Set by grade. Text pending from Ferla - recommended: New (previous gen) as new; Like new / Used limited to motor, battery and electrics, cosmetics as-is. This section is not published until the text exists.</p></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">FAQ <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel">
+            <p class="faq-q">What does “previous generation” mean?</p><p>A prior production run of the same model. The differences from the current Mini are listed in “Compare with new”.</p>
+            <p class="faq-q">Can I see the unit in person?</p><p>Yes - book a time to inspect it at our warehouse before you reserve.</p>
+            <p class="faq-q">Can I add options?</p><p>Canopy, solar and freezer add-ons from the catalog can be installed before shipping; see “Complete your setup”.</p>
+            <p class="faq-q">What if it is damaged in transit?</p><p>Note damage on the delivery receipt and send photos within 48 hours; we handle the carrier claim.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-btn" aria-expanded="false">Reviews <span class="ic" aria-hidden="true"></span></button>
+          <div class="acc-panel"><div class="rev-note">Site Reviews for the parent model (Ferla Mini) are shown here - outlet units have no reviews of their own.</div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <section class="other">
+    <div class="wrap">
+      <h2>Other outlet units</h2>
+      <div class="grid" id="grid-other"></div>
+    </div>
+  </section>
+
+  <!-- mobile sticky bar -->
+  <div class="sticky" id="sticky" aria-hidden="true">
+    <div class="pr"><b>$4,999</b><span class="chip" style="align-self:flex-start">Save $500</span></div>
+    <a class="btn btn-brand" href="#">Buy now</a>
+    <a class="btn btn-white ask" href="#" aria-label="Reserve / Ask about this unit"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4z"/></svg></a>
+  </div>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <a class="logo" href="#">ferla</a>
+    <div class="meta">+1 (213) 291-9070 · Info@ferlabikes.com<br>1100 W 135th St, Gardena, CA 90247</div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="x" id="lb-x" aria-label="Close">×</button><img id="lb-img" src="" alt=""></div>
+
+<script>
+(function(){
+  // ---- data: 9 outlet units (live prices, live image URLs) ----
+  var U = 'img/';
+  var units = [
+    {type:'bike', name:'Vending Bike', spec:'Electric · Pedal assist · Black', badge:'New · previous gen', price:4199, was:4899, img:U+'IMG_0572-ext-copy-1024x730.jpg'},
+    {type:'bike', name:'Ice Cream Bike', spec:'Non-electric · Freezer · Yellow', badge:'New · previous gen', price:4699, was:5399, img:null},
+    {type:'bike', name:'Ferla Mini', spec:'Electric · Foldable frame · Black', badge:'Like new · demo', price:4999, was:5499, img:U+'IMG_7972-1024x768.jpeg', unit:'015', pdp:true},
+    {type:'bike', name:'Promo Bike', spec:'Electric · White · Unit #009', badge:'Used', price:5399, was:6399, img:U+'20250919_150855-768x1024.jpg', unit:'009'},
+    {type:'bike', name:'Promo Bike', spec:'Electric · White', badge:'New · previous gen', price:5799, was:6799, img:U+'20250919_150855-1-901x1024.jpg'},
+    {type:'bike', name:'Last Mile Delivery Bike', spec:'Prototype · Cargo delivery · #007', badge:'Like new · demo', badge2:'Biggest saving', price:8399, was:10399, img:U+'IMG_7982-1024x768.jpeg', unit:'007'},
+    {type:'bike', name:'Ferla X', spec:'Electric · Freezer · Wood finish', badge:'New · previous gen', price:8999, was:9999, img:U+'Media-1-D214888F-8414-4093-BA07-E67EA683DA2A-1024x768.jpg'},
+    {type:'cart', name:'Grande Cart', spec:'Caster wheels · No freezer · White', badge:'New', price:4799, was:5799, img:U+'Media-1-4FF6C453-8068-4D17-B2FB-62FFF309F5CB-1024x768.jpg'},
+    {type:'cart', name:'Metal Cart', spec:'Sink · Cash drawer · Unit #008', badge:'Like new · demo', price:6399, was:7399, img:U+'IMG_1539-768x1024.jpg', unit:'008'}
+  ];
+  function money(n){return '$'+n.toLocaleString('en-US');}
+  function card(u){
+    var photo = u.img
+      ? '<img src="'+u.img+'" alt="'+u.name+' outlet unit">'
+      : '<div class="coming"><svg viewBox="0 0 24 24" fill="none" stroke="#7A7A7A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo coming<small style="font-weight:400">shot scheduled first</small></div>';
+    var badges = '<span class="pill">'+u.badge+'</span>'+(u.badge2?'<span class="pill">'+u.badge2+'</span>':'');
+    return '<a class="card" href="#'+(u.pdp?'pdp':'')+'" data-goto="'+(u.pdp?'pdp':'')+'">'+
+      '<div class="ph">'+photo+'<div class="badges">'+badges+'</div></div>'+
+      '<h3 class="name">'+u.name+'</h3>'+
+      '<p class="spec">'+u.spec+'</p>'+
+      '<div class="price-row"><p class="price">'+money(u.price)+'</p><span class="chip m-only">Save '+money(u.was-u.price)+'</span></div>'+
+      '<p class="was">Configured new <s>'+money(u.was)+'</s> <span class="chip d-only">Save '+money(u.was-u.price)+'</span></p>'+
+      '<p class="avail"><span>1 unit · ships now</span><span class="view">View unit →</span></p>'+
+    '</a>';
+  }
+  var byPrice = function(a,b){return a.price-b.price;};
+  var bikes = units.filter(function(u){return u.type==='bike';}).sort(byPrice);
+  var carts = units.filter(function(u){return u.type==='cart';}).sort(byPrice);
+  document.getElementById('grid-bikes').innerHTML = bikes.map(card).join('');
+  document.getElementById('grid-carts').innerHTML = carts.map(card).join('');
+  // other outlet units on PDP: 3 nearest bikes by price, excluding #015
+  var other = bikes.filter(function(u){return !u.pdp;}).slice(0,3);
+  document.getElementById('grid-other').innerHTML = other.map(card).join('');
+
+  // mobile vs desktop chip placement (one chip visible at a time)
+  var st = document.createElement('style');
+  st.textContent = '@media (max-width:699px){.card .d-only{display:none}} @media (min-width:700px){.card .m-only{display:none}}';
+  document.head.appendChild(st);
+
+  // ---- tabs ----
+  var tabs = document.querySelectorAll('.proto .tab');
+  function show(page){
+    document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('is-active', p.id==='page-'+page);});
+    tabs.forEach(function(t){t.setAttribute('aria-selected', t.dataset.page===page ? 'true':'false');});
+    document.body.classList.toggle('has-sticky', page==='pdp');
+    if(page!=='pdp'){ sticky.classList.remove('show'); }
+    window.scrollTo(0,0);
+    if(location.hash!=='#'+page){ history.replaceState(null,'','#'+page); }
+    checkSticky();
+  }
+  tabs.forEach(function(t){t.addEventListener('click', function(){show(t.dataset.page);});});
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('[data-goto]');
+    if(a && a.dataset.goto){ e.preventDefault(); show(a.dataset.goto); }
+    else if(a){ e.preventDefault(); }
+  });
+
+  // ---- accordions ----
+  document.querySelectorAll('.acc-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      var item = b.parentElement, open = !item.classList.contains('open');
+      item.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', open ? 'true':'false');
+    });
+  });
+
+  // ---- gallery ----
+  var hero = document.getElementById('hero'), heroImg = document.getElementById('hero-img');
+  var placeholder = document.createElement('div');
+  placeholder.className='coming';
+  placeholder.style.cssText='position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#7A7A7A;font-weight:600;font-size:15px';
+  hero.appendChild(placeholder);
+  document.querySelectorAll('.thumb').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.thumb').forEach(function(x){x.classList.remove('is-on');});
+      t.classList.add('is-on');
+      if(t.dataset.src){ heroImg.style.display='block'; placeholder.style.display='none'; heroImg.src=t.dataset.src; }
+      else { heroImg.style.display='none'; placeholder.style.display='flex'; placeholder.textContent = t.dataset.label+' photo - after the shoot'; }
+    });
+  });
+  var lb = document.getElementById('lb'), lbImg = document.getElementById('lb-img');
+  function openLb(){ if(heroImg.style.display==='none') return; lbImg.src = heroImg.src; lb.classList.add('open'); sticky.classList.remove('show'); }
+  function closeLb(){ lb.classList.remove('open'); checkSticky(); }
+  hero.addEventListener('click', openLb);
+  hero.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLb(); } });
+  document.getElementById('lb-x').addEventListener('click', closeLb);
+  lb.addEventListener('click', function(e){ if(e.target===lb) closeLb(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLb(); });
+
+  // ---- mobile sticky bar: shows when the main CTA has left the viewport ----
+  var sticky = document.getElementById('sticky'), cta = document.getElementById('cta');
+  function checkSticky(){
+    var onPdp = document.getElementById('page-pdp').classList.contains('is-active');
+    if(!onPdp || lb.classList.contains('open')){ sticky.classList.remove('show'); sticky.setAttribute('aria-hidden','true'); return; }
+    var r = cta.getBoundingClientRect();
+    var out = r.bottom < 0 || r.top > window.innerHeight;
+    sticky.classList.toggle('show', out);
+    sticky.setAttribute('aria-hidden', out ? 'false':'true');
+  }
+  window.addEventListener('scroll', checkSticky, {passive:true});
+  window.addEventListener('resize', checkSticky);
+
+  // ---- initial page from hash; hash links switch pages too ----
+  function fromHash(){ show(location.hash==='#pdp' ? 'pdp' : 'listing'); }
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+})();
+</script>
